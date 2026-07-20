@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lendis-content-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: WordPress Application Passwords (username plus application password) sent as
+    HTTP Basic over TLS. Required for write operations and privileged routes; anonymous read
+    access needs no credentials.
+  sources:
+  - openapi/lendis-content-openapi.yml
+- name: nonce
+  type: apiKey
+  in: header
+  parameter: X-WP-Nonce
+  description: Cookie-authenticated first-party browser requests send a WordPress nonce in the
+    X-WP-Nonce header, advertised in Access-Control-Allow-Headers on live responses.
+  sources:
+  - openapi/lendis-content-openapi.yml
