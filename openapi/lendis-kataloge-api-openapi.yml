@@ -1,0 +1,270 @@
+openapi: 3.1.0
+info:
+  title: Lendis Content API (WordPress REST) case-study kataloge API
+  version: wp/v2
+  summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
+  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  contact:
+    name: Lendis GmbH
+    url: https://www.lendis.io/kontakt/
+    email: info@lendis.io
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://www.lendis.io/wp-json/wp/v2
+servers:
+- url: https://www.lendis.io/wp-json
+  description: Production WordPress REST API root for www.lendis.io
+security: []
+tags:
+- name: kataloge
+  description: Kataloge (downloadable product catalogs)
+paths:
+  /wp/v2/kataloge:
+    get:
+      operationId: listKataloge
+      summary: List Kataloge (downloadable product catalogs)
+      description: Returns a paginated collection of published `kataloge` objects from the Lendis WordPress content API.
+      tags:
+      - kataloge
+      parameters:
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Katalog'
+        '400':
+          $ref: '#/components/responses/Error'
+  /wp/v2/kataloge/{id}:
+    get:
+      operationId: getKatalogeItem
+      summary: Get one of the Kataloge (downloadable product catalogs)
+      description: Returns a single published `kataloge` object by its numeric ID.
+      tags:
+      - kataloge
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Katalog'
+        '404':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    Katalog:
+      type: object
+      description: A downloadable product catalog (`kataloge`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term, wp:featuredmedia).
+    Error:
+      type: object
+      description: 'The WordPress REST API error envelope. This is NOT RFC 9457 problem+json: it is served as application/json with a WordPress-specific shape.'
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. rest_forbidden, rest_post_invalid_id, rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message, localised to the site language (German on www.lendis.io).
+        data:
+          type: object
+          description: Structured error data.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+  responses:
+    Error:
+      description: WordPress REST API error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            forbidden:
+              summary: Anonymous call to a privileged route (observed live on /wp/v2/settings)
+              value:
+                code: rest_forbidden
+                message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+                data:
+                  status: 401
+            invalidId:
+              summary: Unknown object ID (observed live on /wp/v2/posts/99999999)
+              value:
+                code: rest_post_invalid_id
+                message: Die Beitrags-ID ist ungültig.
+                data:
+                  status: 404
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords (username plus application password) sent as HTTP Basic over TLS. Required for write operations and privileged routes; anonymous read access needs no credentials.
+    nonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: Cookie-authenticated first-party browser requests send a WordPress nonce in the X-WP-Nonce header, advertised in Access-Control-Allow-Headers on live responses.

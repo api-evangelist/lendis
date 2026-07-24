@@ -1,0 +1,246 @@
+openapi: 3.1.0
+info:
+  title: Lendis Content API (WordPress REST) case-study discovery API
+  version: wp/v2
+  summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
+  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  contact:
+    name: Lendis GmbH
+    url: https://www.lendis.io/kontakt/
+    email: info@lendis.io
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://www.lendis.io/wp-json/wp/v2
+servers:
+- url: https://www.lendis.io/wp-json
+  description: Production WordPress REST API root for www.lendis.io
+security: []
+tags:
+- name: discovery
+  description: Route, type and taxonomy discovery plus site-wide search
+paths:
+  /wp/v2:
+    get:
+      operationId: getNamespaceIndex
+      summary: Get the wp/v2 namespace route index
+      description: 'Returns the machine-readable route index for the `wp/v2` namespace: every route, its supported methods and argument schemas. This is the discovery document this OpenAPI was derived from.'
+      tags:
+      - discovery
+      parameters: []
+      responses:
+        '200':
+          description: Namespace route index.
+          content:
+            application/json:
+              schema:
+                type: object
+  /wp/v2/types:
+    get:
+      operationId: listTypes
+      summary: List registered content types
+      description: Returns every post type registered on the Lendis site, keyed by type name, including its `rest_base` and associated taxonomies.
+      tags:
+      - discovery
+      parameters: []
+      responses:
+        '200':
+          description: Map of registered content types.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ContentType'
+  /wp/v2/taxonomies:
+    get:
+      operationId: listTaxonomies
+      summary: List registered taxonomies
+      description: Returns every taxonomy registered on the Lendis site, keyed by taxonomy name.
+      tags:
+      - discovery
+      parameters: []
+      responses:
+        '200':
+          description: Map of registered taxonomies.
+          content:
+            application/json:
+              schema:
+                type: object
+  /wp/v2/search:
+    get:
+      operationId: searchContent
+      summary: Search across content types
+      description: Full-text search across the Lendis site's searchable content types, returning lightweight result stubs carrying id, title, url, type and subtype.
+      tags:
+      - discovery
+      parameters:
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    SearchResult:
+      type: object
+      description: A lightweight search result stub.
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the matched object.
+        title:
+          type: string
+          description: The title for the matched object.
+        url:
+          type: string
+          format: uri
+          description: URL to the matched object.
+        type:
+          type: string
+          description: Object type.
+        subtype:
+          type: string
+          description: Object subtype.
+        _links:
+          type: object
+          description: HAL-style link relations.
+    ContentType:
+      type: object
+      description: A registered WordPress post type.
+      properties:
+        name:
+          type: string
+          description: The human-readable title for the post type.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the post type.
+        rest_base:
+          type: string
+          description: REST base route for the post type.
+        taxonomies:
+          type: array
+          items:
+            type: string
+          description: Taxonomies associated with the post type.
+        hierarchical:
+          type: boolean
+          description: Whether the post type supports children.
+    Error:
+      type: object
+      description: 'The WordPress REST API error envelope. This is NOT RFC 9457 problem+json: it is served as application/json with a WordPress-specific shape.'
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. rest_forbidden, rest_post_invalid_id, rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message, localised to the site language (German on www.lendis.io).
+        data:
+          type: object
+          description: Structured error data.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+  responses:
+    Error:
+      description: WordPress REST API error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            forbidden:
+              summary: Anonymous call to a privileged route (observed live on /wp/v2/settings)
+              value:
+                code: rest_forbidden
+                message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+                data:
+                  status: 401
+            invalidId:
+              summary: Unknown object ID (observed live on /wp/v2/posts/99999999)
+              value:
+                code: rest_post_invalid_id
+                message: Die Beitrags-ID ist ungültig.
+                data:
+                  status: 404
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords (username plus application password) sent as HTTP Basic over TLS. Required for write operations and privileged routes; anonymous read access needs no credentials.
+    nonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: Cookie-authenticated first-party browser requests send a WordPress nonce in the X-WP-Nonce header, advertised in Access-Control-Allow-Headers on live responses.

@@ -1,0 +1,531 @@
+openapi: 3.1.0
+info:
+  title: Lendis Content API (WordPress REST) case-study taxonomies API
+  version: wp/v2
+  summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
+  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  contact:
+    name: Lendis GmbH
+    url: https://www.lendis.io/kontakt/
+    email: info@lendis.io
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://www.lendis.io/wp-json/wp/v2
+servers:
+- url: https://www.lendis.io/wp-json
+  description: Production WordPress REST API root for www.lendis.io
+security: []
+tags:
+- name: taxonomies
+  description: 'Taxonomy terms: categories, tags, wiki letters, Ratgeber categories'
+paths:
+  /wp/v2/categories:
+    get:
+      operationId: listCategories
+      summary: List Post categories
+      description: Returns a paginated collection of terms in the `categories` taxonomy.
+      tags:
+      - taxonomies
+      parameters:
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400':
+          $ref: '#/components/responses/Error'
+  /wp/v2/categories/{id}:
+    get:
+      operationId: getCategoriesItem
+      summary: Get a single term from Post categories
+      description: Returns a single term in the `categories` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404':
+          $ref: '#/components/responses/Error'
+  /wp/v2/tags:
+    get:
+      operationId: listTags
+      summary: List Post tags
+      description: Returns a paginated collection of terms in the `tags` taxonomy.
+      tags:
+      - taxonomies
+      parameters:
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400':
+          $ref: '#/components/responses/Error'
+  /wp/v2/tags/{id}:
+    get:
+      operationId: getTagsItem
+      summary: Get a single term from Post tags
+      description: Returns a single term in the `tags` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404':
+          $ref: '#/components/responses/Error'
+  /wp/v2/ratgeber-kategorien:
+    get:
+      operationId: listRatgeberKategorien
+      summary: List Ratgeber categories
+      description: Returns a paginated collection of terms in the `ratgeber-kategorien` taxonomy.
+      tags:
+      - taxonomies
+      parameters:
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400':
+          $ref: '#/components/responses/Error'
+  /wp/v2/ratgeber-kategorien/{id}:
+    get:
+      operationId: getRatgeberKategorienItem
+      summary: Get a single term from Ratgeber categories
+      description: Returns a single term in the `ratgeber-kategorien` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404':
+          $ref: '#/components/responses/Error'
+  /wp/v2/letter:
+    get:
+      operationId: listLetter
+      summary: List Wiki letter taxonomy terms
+      description: Returns a paginated collection of terms in the `letter` taxonomy.
+      tags:
+      - taxonomies
+      parameters:
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400':
+          $ref: '#/components/responses/Error'
+  /wp/v2/letter/{id}:
+    get:
+      operationId: getLetterItem
+      summary: Get a single term from Wiki letter taxonomy terms
+      description: Returns a single term in the `letter` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    Term:
+      type: object
+      description: A taxonomy term (category, tag, wiki letter, or Ratgeber category).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the term.
+        count:
+          type: integer
+          description: Number of published objects assigned to the term.
+        description:
+          type: string
+          description: HTML description of the term.
+        link:
+          type: string
+          format: uri
+          description: URL of the term archive.
+        name:
+          type: string
+          description: HTML title for the term.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the term unique to its type.
+        taxonomy:
+          type: string
+          description: Taxonomy the term belongs to.
+        parent:
+          type: integer
+          description: The parent term ID.
+        _links:
+          type: object
+          description: HAL-style link relations for the term.
+    Error:
+      type: object
+      description: 'The WordPress REST API error envelope. This is NOT RFC 9457 problem+json: it is served as application/json with a WordPress-specific shape.'
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. rest_forbidden, rest_post_invalid_id, rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message, localised to the site language (German on www.lendis.io).
+        data:
+          type: object
+          description: Structured error data.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+  responses:
+    Error:
+      description: WordPress REST API error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            forbidden:
+              summary: Anonymous call to a privileged route (observed live on /wp/v2/settings)
+              value:
+                code: rest_forbidden
+                message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+                data:
+                  status: 401
+            invalidId:
+              summary: Unknown object ID (observed live on /wp/v2/posts/99999999)
+              value:
+                code: rest_post_invalid_id
+                message: Die Beitrags-ID ist ungültig.
+                data:
+                  status: 404
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords (username plus application password) sent as HTTP Basic over TLS. Required for write operations and privileged routes; anonymous read access needs no credentials.
+    nonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: Cookie-authenticated first-party browser requests send a WordPress nonce in the X-WP-Nonce header, advertised in Access-Control-Allow-Headers on live responses.
