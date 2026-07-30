@@ -1,0 +1,32 @@
+{
+  "provider": "lendis",
+  "sources": [
+    "lendis-case-study-api-openapi.yml",
+    "lendis-discovery-api-openapi.yml",
+    "lendis-kataloge-api-openapi.yml",
+    "lendis-media-api-openapi.yml",
+    "lendis-pages-api-openapi.yml",
+    "lendis-posts-api-openapi.yml",
+    "lendis-ratgeber-api-openapi.yml",
+    "lendis-taxonomies-api-openapi.yml",
+    "lendis-testimonial-api-openapi.yml",
+    "lendis-wiki-api-openapi.yml"
+  ],
+  "outputs": [
+    "lendis-case-study-api-openapi.yml",
+    "lendis-discovery-api-openapi.yml",
+    "lendis-kataloge-api-openapi.yml",
+    "lendis-media-api-openapi.yml",
+    "lendis-pages-api-openapi.yml",
+    "lendis-posts-api-openapi.yml",
+    "lendis-ratgeber-api-openapi.yml",
+    "lendis-taxonomies-api-openapi.yml",
+    "lendis-testimonial-api-openapi.yml",
+    "lendis-wiki-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

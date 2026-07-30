@@ -1,0 +1,63 @@
+generated: '2026-07-19'
+method: searched
+source: npm registry search, PyPI, RubyGems, Packagist, crates.io, and the Lendis GitHub org
+summary: >-
+  Lendis publishes no client SDK for any API. The only first-party packages found on any public
+  registry are two internal engineering utilities published from the lendis-tech GitHub org in
+  2021-2022, both unmaintained since May 2022 and neither an API client library. Because no
+  official client library exists, this repo deliberately does NOT emit an apis.yml `SDKs` pointer.
+registries_probed:
+- registry: npm
+  result: 2 packages under the lendis-tech org
+- registry: pypi
+  result: no package named lendis (404)
+- registry: rubygems
+  result: no gem named lendis (404)
+- registry: packagist
+  result: no package lendis/lendis (404)
+- registry: crates.io
+  result: no crate named lendis
+- registry: maven-central
+  result: no first-party Lendis artifact found
+- registry: nuget
+  result: no first-party Lendis artifact found
+- registry: pkg.go.dev
+  result: no first-party Lendis module found
+packages:
+- language: javascript
+  registry: npm
+  name: lendis-sdk
+  url: https://www.npmjs.com/package/lendis-sdk
+  install: npm install lendis-sdk
+  version: 1.0.13
+  license: ISC
+  repository: https://github.com/lendis-tech/lendis-sdk
+  published: '2021-09-02'
+  last_modified: '2022-05-07'
+  official: true
+  kind: internal-tooling
+  api_client: false
+  description: 'Despite the name, this is not an API client library. Its own description reads
+    "shared functionality for cdk and app" - internal code shared between Lendis'' AWS CDK
+    infrastructure and application. Published from the lendis-tech GitHub org. Unmaintained
+    since May 2022.'
+- language: javascript
+  registry: npm
+  name: lendis-git-hooks
+  url: https://www.npmjs.com/package/lendis-git-hooks
+  install: npm install lendis-git-hooks
+  version: 1.0.4
+  license: ISC
+  repository: https://github.com/lendis-tech/git-hooks
+  published: '2021-07-21'
+  last_modified: '2022-05-07'
+  official: true
+  kind: internal-tooling
+  api_client: false
+  description: Git hooks enforcing version-control conventions across Lendis repositories.
+    Developer tooling, not an API client. Unmaintained since May 2022.
+sdk_count: 0
+sdk_note: >-
+  Zero official client libraries for a Lendis API. The public WordPress REST content API at
+  www.lendis.io/wp-json is consumable with any generic HTTP client or any of the many
+  community WordPress REST clients, none of which are published by Lendis.

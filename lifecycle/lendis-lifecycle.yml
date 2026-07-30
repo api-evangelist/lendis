@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lendis-content-openapi.yml plus probes of the Lendis public site for versioning,
+  deprecation, SLA and status surfaces
+api: lendis:content
+summary: >-
+  Lendis operates no developer program, so there is no API lifecycle policy of any kind: no
+  published versioning policy, no deprecation policy, no Sunset header support, no SLA and no
+  status page. The only versioning signal is the WordPress namespace in the URI path. Because
+  neither a status page nor a deprecation policy exists, this repo deliberately does NOT emit
+  apis.yml StatusPage or Deprecation pointers.
+versioning:
+  scheme: uri-path-namespace
+  current: wp/v2
+  base: https://www.lendis.io/wp-json
+  policy_url: null
+  note: Inherited from WordPress core rather than governed by Lendis. The namespace has been
+    wp/v2 since WordPress 4.7 (2016). Plugin-contributed namespaces on this deployment
+    (jet-engine/v1, rankmath/v1, weglot/v1 and others) carry their own vendor versioning.
+  discovery: GET https://www.lendis.io/wp-json/ lists every registered namespace; GET
+    https://www.lendis.io/wp-json/wp/v2 returns the full route index.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: No RFC 8594 Sunset or Deprecation headers were observed on live responses, and no
+    deprecation policy is published.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  published: false
+  note: No API SLA. The commercial DaaS offering advertises personal IT support on
+    +49 30 311 99 676 Monday to Friday 09:00-18:00 CET, which is a human support commitment,
+    not an API availability target.
+status_page:
+  url: null
+  present: false
+  probed:
+  - url: https://status.lendis.io
+    result: NXDOMAIN
+  - url: https://www.lendis.io/status/
+    result: 404
+support:
+  contact_url: https://www.lendis.io/kontakt/
+  help_center: https://www.lendis.io/faq/
+  email: info@lendis.io
+  phone: '+49 30 311 99 676'
+  hours: Mon-Fri 09:00-18:00 CET
+changelog:
+  url: null
+  published: false
+  note: No dated API or product changelog. The Magazin at https://www.lendis.io/magazin/ is
+    marketing content, not a release log, so no changelog/ artifact was written.
+platform_note: >-
+  Lendis' commercial platform (LendisOS at app.lendis.io) is backed by a private AWS API Gateway
+  at api.lendis.io which answers every path with HTTP 403 "Missing Authentication Token". It has
+  no public routes, no documentation and no announced lifecycle. If Lendis ever opens that API,
+  this artifact is where the real policy would land.

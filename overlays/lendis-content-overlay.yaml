@@ -1,0 +1,73 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Lendis Content API
+  version: 1.0.0
+extends: openapi/lendis-content-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: API Evangelist enrichment pipeline
+x-note: >-
+  Lendis publishes no OpenAPI. The extended document was itself derived from the API's own live
+  route-discovery index at https://www.lendis.io/wp-json/wp/v2. This overlay records the
+  API Evangelist annotations layered on top of that derivation - provenance, agent-readiness
+  guidance and cross-links to the sibling artifacts in this repo - without mutating the spec.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provenance: derived-from-live-route-index
+    x-apievangelist-artifacts:
+      conventions: conventions/lendis-conventions.yml
+      errors: errors/lendis-problem-types.yml
+      authentication: authentication/lendis-authentication.yml
+      data_model: data-model/lendis-data-model.yml
+      lifecycle: lifecycle/lendis-lifecycle.yml
+      conformance: conformance/lendis-conformance.yml
+      mcp: mcp/lendis-mcp.yml
+      skills: skills/_index.yml
+    x-apievangelist-caveat: >-
+      This is the marketing site's CMS API, not a Lendis product API. Lendis' commercial platform
+      (LendisOS) is backed by a private AWS API Gateway at api.lendis.io with no public routes.
+- target: $.info
+  update:
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      audience: null
+      token:
+        max-ttl-seconds: 3600
+      audit: optional
+      note: Every operation in this document is a safe, read-only GET over public published
+        content. No write, payment or physical-consequence operation is exposed.
+- target: $.servers[0]
+  update:
+    x-rate-limit-policy: undocumented
+    x-edge: Cloudflare; no RateLimit or Retry-After headers observed, so callers should
+      self-throttle and back off on 429 or 5xx.
+- target: $.components.securitySchemes.applicationPassword
+  update:
+    x-apievangelist-note: Not required for any operation in this document. Present because the
+      same namespace exposes privileged routes that return 401 rest_forbidden to anonymous
+      callers.
+- target: $.components.schemas.Error
+  update:
+    x-apievangelist-note: WordPress envelope, not RFC 9457 problem+json. Machine-readable
+      routing should key on `code`, never on `message`, which is localised to German on this
+      deployment.
+- target: $.paths['/wp/v2/posts'].get
+  update:
+    x-pagination:
+      style: page-number
+      params: [page, per_page]
+      total_headers: [X-WP-Total, X-WP-TotalPages]
+      link_header: RFC 8288 rel="next" / rel="prev"
+      max_per_page: 100
+- target: $.paths['/wp/v2/wiki'].get
+  update:
+    x-apievangelist-note: The Lendis Wiki is the most agent-useful surface here - a structured
+      German-language glossary of IT-procurement and Device-as-a-Service terminology, grouped by
+      the `letter` taxonomy.
+- target: $.paths['/wp/v2/search'].get
+  update:
+    x-apievangelist-note: Cheapest entry point for an agent. Returns lightweight stubs whose
+      `subtype` names the target content type, letting the agent fetch the full object from the
+      matching collection.

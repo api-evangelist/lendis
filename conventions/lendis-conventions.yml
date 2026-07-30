@@ -1,0 +1,104 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lendis-content-openapi.yml plus live response-header observation against
+  https://www.lendis.io/wp-json/wp/v2
+api: lendis:content
+scope: >-
+  Cross-cutting request/response semantics for the public WordPress REST content API behind
+  www.lendis.io. These are WordPress core conventions, observed live on the Lendis host rather
+  than documented by Lendis - the company publishes no API documentation of its own.
+authentication:
+  anonymous_read: true
+  note: All published content routes are readable with no credentials. Privileged routes
+    (/wp/v2/settings, /wp/v2/plugins) and all write methods return HTTP 401 to anonymous callers.
+  schemes:
+  - HTTP Basic with a WordPress Application Password
+  - X-WP-Nonce header for cookie-authenticated first-party browser requests
+  advertised_headers: Access-Control-Allow-Headers lists Authorization, X-WP-Nonce,
+    Content-Disposition, Content-MD5, Content-Type
+  detail: authentication/lendis-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    The WordPress REST API defines no idempotency-key mechanism. There is no Idempotency-Key
+    header, no request-deduplication window and no retry-safety contract for write operations.
+    Safety rests only on HTTP method semantics (GET/HEAD are safe, PUT/DELETE are naturally
+    idempotent, POST is not). No apis.yml Idempotency pointer is emitted for this provider
+    because there is no idempotency contract to point at.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    default: 1
+    description: 1-based page index.
+  - name: per_page
+    default: 10
+    max: 100
+    description: Items per page.
+  response_headers:
+  - name: X-WP-Total
+    description: Total number of items in the collection.
+  - name: X-WP-TotalPages
+    description: Total number of pages available.
+  - name: Link
+    description: RFC 8288 Link header carrying rel="next" and rel="prev" URLs.
+  observed: 'GET /wp/v2/posts?per_page=2 returned X-WP-Total: 38, X-WP-TotalPages: 19 and a
+    Link header with rel="next".'
+  cors_exposed: Access-Control-Expose-Headers lists X-WP-Total, X-WP-TotalPages, Link,
+    Jet-Query-Total, Jet-Query-Pages.
+sparse_fields:
+  supported: true
+  param: _fields
+  description: Comma-separated allowlist of response fields, applied to both collection and
+    single-item responses.
+expansion:
+  supported: true
+  param: _embed
+  description: Embeds linked resources (author, featured media, taxonomy terms) into an
+    _embedded object on the response, following the HAL-style _links relations.
+  link_relations: Every object carries a _links object with self, collection, about, author,
+    wp:term and wp:featuredmedia relations.
+filtering:
+  params:
+  - search
+  - slug
+  - order
+  - orderby
+  note: Content-type-specific taxonomy filters (categories, tags, letter, ratgeber-kategorien)
+    are also accepted on their respective collections.
+versioning:
+  scheme: uri-path-namespace
+  current: wp/v2
+  base: https://www.lendis.io/wp-json
+  discovery: 'GET https://www.lendis.io/wp-json/ returns the namespace list; GET
+    https://www.lendis.io/wp-json/wp/v2 returns the full machine-readable route index with
+    argument schemas for every route.'
+  note: Namespace, not semantic versioning. Lendis publishes no versioning or deprecation
+    policy of its own; the version moves when WordPress core does.
+  detail: lifecycle/lendis-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape:
+    code: Machine-readable WordPress error code string.
+    message: Human-readable message, localised to the site language (German on www.lendis.io).
+    data.status: HTTP status code, repeated inside the payload.
+  detail: errors/lendis-problem-types.yml
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation-id header is returned. Responses carry only standard
+    Cloudflare and WordPress headers.
+rate_limiting:
+  documented: false
+  headers_observed: none
+  note: >-
+    No RateLimit / X-RateLimit headers and no Retry-After were observed on live responses, and
+    Lendis publishes no rate-limit policy. The site sits behind Cloudflare, so bot management
+    and edge protections may throttle aggressive callers without a documented contract.
+caching:
+  observed: 'Cache-Control: max-age=0 on wp/v2 collection responses; the HTML site is
+    Cloudflare-cached and served through the WP Rocket plugin.'
+content_negotiation:
+  request: application/json
+  response: application/json; charset=UTF-8
+  language: Responses (including error messages) are localised to German.

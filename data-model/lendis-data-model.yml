@@ -1,0 +1,153 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lendis-content-openapi.yml plus the live type and taxonomy registry at
+  https://www.lendis.io/wp-json/wp/v2/types and /wp/v2/taxonomies
+api: lendis:content
+summary: >-
+  Entity graph of the public Lendis WordPress content API. Eight readable content entities (three
+  WordPress core, five Lendis-specific custom post types) plus four taxonomies. Relationships are
+  expressed in WordPress' usual way: id-reference fields on the object (author, featured_media,
+  parent) and arrays of term IDs for taxonomy assignments, with HAL-style _links relations
+  (self, collection, author, wp:term, wp:featuredmedia) carrying the traversable URLs.
+identifiers:
+  scheme: integer
+  note: Every object is keyed by a site-scoped positive integer `id`. There are no prefixed or
+    globally unique IDs. Each object also carries a `slug` unique within its type and a `guid`.
+entities:
+- name: Post
+  rest_base: posts
+  wp_type: post
+  domain: content
+  description: Blog posts published in the Lendis Magazin.
+  key_fields: [id, slug, title, content, excerpt, date, modified, link, status, author,
+    featured_media, categories, tags]
+- name: Page
+  rest_base: pages
+  wp_type: page
+  domain: content
+  description: Site pages, hierarchical via parent.
+  key_fields: [id, slug, title, content, parent, menu_order, link, status]
+- name: MediaItem
+  rest_base: media
+  wp_type: attachment
+  domain: media
+  description: Media-library files - images, PDFs and downloadable catalogs.
+  key_fields: [id, slug, title, alt_text, caption, media_type, mime_type, source_url,
+    media_details]
+- name: WikiEntry
+  rest_base: wiki
+  wp_type: wiki
+  domain: knowledge
+  description: Lendis Wiki glossary entries, grouped alphabetically by the letter taxonomy.
+  key_fields: [id, slug, title, content, link, letter]
+- name: RatgeberEntry
+  rest_base: ratgeber
+  wp_type: ratgeber
+  domain: knowledge
+  description: Ratgeber buyer's guides, grouped by the ratgeber-kategorien taxonomy.
+  key_fields: [id, slug, title, content, link, ratgeber-kategorien]
+- name: CaseStudy
+  rest_base: case-study
+  wp_type: case-study
+  domain: marketing
+  description: Customer case studies (for example KoRo, Bilthouse Gruppe).
+  key_fields: [id, slug, title, content, link, featured_media]
+- name: Katalog
+  rest_base: kataloge
+  wp_type: kataloge
+  domain: marketing
+  description: Downloadable product catalogs.
+  key_fields: [id, slug, title, content, link, featured_media]
+- name: Testimonial
+  rest_base: testimonial
+  wp_type: testimonial
+  domain: marketing
+  description: Short customer testimonials rendered across the site.
+  key_fields: [id, slug, title, content, featured_media]
+- name: Term
+  rest_base: [categories, tags, letter, ratgeber-kategorien]
+  domain: taxonomy
+  description: A taxonomy term. One shared shape serves all four taxonomies.
+  key_fields: [id, name, slug, taxonomy, parent, count, link, description]
+- name: ContentType
+  rest_base: types
+  domain: discovery
+  description: A registered post type descriptor returned by the discovery endpoint.
+  key_fields: [name, slug, rest_base, taxonomies, hierarchical]
+- name: SearchResult
+  rest_base: search
+  domain: discovery
+  description: A lightweight stub pointing at a matched object of any searchable type.
+  key_fields: [id, title, url, type, subtype]
+relationships:
+- from: Post
+  to: Term
+  kind: has_many
+  via: categories
+  taxonomy: category
+  note: Array of term IDs; traversable through the wp:term link relation.
+- from: Post
+  to: Term
+  kind: has_many
+  via: tags
+  taxonomy: post_tag
+- from: Post
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+  note: Zero when no featured image is set; traversable through wp:featuredmedia.
+- from: Post
+  to: User
+  kind: belongs_to
+  via: author
+  note: Author IDs resolve against /wp/v2/users, which is publicly readable on this site.
+- from: Page
+  to: Page
+  kind: belongs_to
+  via: parent
+  note: Self-referential hierarchy; 0 means top level.
+- from: Page
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+- from: WikiEntry
+  to: Term
+  kind: has_many
+  via: letter
+  taxonomy: letter
+  note: Alphabetical grouping for the Wiki index.
+- from: RatgeberEntry
+  to: Term
+  kind: has_many
+  via: ratgeber-kategorien
+  taxonomy: ratgeber-kategorien
+- from: CaseStudy
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+- from: Katalog
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+  note: The catalog PDF itself is a MediaItem reachable through source_url.
+- from: Testimonial
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+- from: Term
+  to: Term
+  kind: belongs_to
+  via: parent
+  note: Hierarchical taxonomies only (category, ratgeber-kategorien).
+- from: SearchResult
+  to: Post
+  kind: has_one
+  via: id + subtype
+  note: subtype names the target post type; id resolves against that type's rest_base.
+- from: ContentType
+  to: Term
+  kind: has_many
+  via: taxonomies
+  note: Names the taxonomies bound to each post type.
+render: null
+render_note: No subway/ diagram exists for this repo yet.

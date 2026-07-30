@@ -1,0 +1,1761 @@
+openapi: 3.1.0
+info:
+  title: Lendis Content API (WordPress REST)
+  version: wp/v2
+  summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki,
+    case studies and catalogs.
+  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress
+    REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read
+    access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis
+    content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies.
+    Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication
+    and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist
+    from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified
+    against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS
+    at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation
+    or developer program as of this writing.'
+  contact:
+    name: Lendis GmbH
+    url: https://www.lendis.io/kontakt/
+    email: info@lendis.io
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://www.lendis.io/wp-json/wp/v2
+servers:
+- url: https://www.lendis.io/wp-json
+  description: Production WordPress REST API root for www.lendis.io
+tags:
+- name: posts
+  description: Beitraege (blog posts from the Lendis Magazin)
+- name: pages
+  description: Seiten (site pages)
+- name: media
+  description: Medien (media library items)
+- name: wiki
+  description: Wiki glossary entries
+- name: ratgeber
+  description: Ratgeber (buyer's guides)
+- name: case-study
+  description: Customer case studies
+- name: kataloge
+  description: Kataloge (downloadable product catalogs)
+- name: testimonial
+  description: Customer testimonials
+- name: taxonomies
+  description: 'Taxonomy terms: categories, tags, wiki letters, Ratgeber categories'
+- name: discovery
+  description: Route, type and taxonomy discovery plus site-wide search
+paths:
+  /wp/v2/posts:
+    get:
+      operationId: listPosts
+      summary: List Beitraege (blog posts from the Lendis Magazin)
+      description: Returns a paginated collection of published `post` objects from the Lendis WordPress
+        content API.
+      tags:
+      - posts
+      parameters: &id002
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in the result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by object attribute.
+        schema:
+          type: string
+          default: date
+      - name: slug
+        in: query
+        description: Limit the result set to objects with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources (author, featured media, terms) into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '400': &id001
+          $ref: '#/components/responses/Error'
+  /wp/v2/posts/{id}:
+    get:
+      operationId: getPostsItem
+      summary: Get one of the Beitraege (blog posts from the Lendis Magazin)
+      description: Returns a single published `post` object by its numeric ID.
+      tags:
+      - posts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404': *id001
+  /wp/v2/pages:
+    get:
+      operationId: listPages
+      summary: List Seiten (site pages)
+      description: Returns a paginated collection of published `page` objects from the Lendis WordPress
+        content API.
+      tags:
+      - pages
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Page'
+        '400': *id001
+  /wp/v2/pages/{id}:
+    get:
+      operationId: getPagesItem
+      summary: Get one of the Seiten (site pages)
+      description: Returns a single published `page` object by its numeric ID.
+      tags:
+      - pages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '404': *id001
+  /wp/v2/media:
+    get:
+      operationId: listMedia
+      summary: List Medien (media library items)
+      description: Returns a paginated collection of published `attachment` objects from the Lendis WordPress
+        content API.
+      tags:
+      - media
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaItem'
+        '400': *id001
+  /wp/v2/media/{id}:
+    get:
+      operationId: getMediaItem
+      summary: Get one of the Medien (media library items)
+      description: Returns a single published `attachment` object by its numeric ID.
+      tags:
+      - media
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaItem'
+        '404': *id001
+  /wp/v2/wiki:
+    get:
+      operationId: listWiki
+      summary: List Wiki glossary entries
+      description: Returns a paginated collection of published `wiki` objects from the Lendis WordPress
+        content API.
+      tags:
+      - wiki
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WikiEntry'
+        '400': *id001
+  /wp/v2/wiki/{id}:
+    get:
+      operationId: getWikiItem
+      summary: Get one of the Wiki glossary entries
+      description: Returns a single published `wiki` object by its numeric ID.
+      tags:
+      - wiki
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiEntry'
+        '404': *id001
+  /wp/v2/ratgeber:
+    get:
+      operationId: listRatgeber
+      summary: List Ratgeber (buyer's guides)
+      description: Returns a paginated collection of published `ratgeber` objects from the Lendis WordPress
+        content API.
+      tags:
+      - ratgeber
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RatgeberEntry'
+        '400': *id001
+  /wp/v2/ratgeber/{id}:
+    get:
+      operationId: getRatgeberItem
+      summary: Get one of the Ratgeber (buyer's guides)
+      description: Returns a single published `ratgeber` object by its numeric ID.
+      tags:
+      - ratgeber
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatgeberEntry'
+        '404': *id001
+  /wp/v2/case-study:
+    get:
+      operationId: listCaseStudy
+      summary: List Customer case studies
+      description: Returns a paginated collection of published `case-study` objects from the Lendis WordPress
+        content API.
+      tags:
+      - case-study
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseStudy'
+        '400': *id001
+  /wp/v2/case-study/{id}:
+    get:
+      operationId: getCaseStudyItem
+      summary: Get one of the Customer case studies
+      description: Returns a single published `case-study` object by its numeric ID.
+      tags:
+      - case-study
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseStudy'
+        '404': *id001
+  /wp/v2/kataloge:
+    get:
+      operationId: listKataloge
+      summary: List Kataloge (downloadable product catalogs)
+      description: Returns a paginated collection of published `kataloge` objects from the Lendis WordPress
+        content API.
+      tags:
+      - kataloge
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Katalog'
+        '400': *id001
+  /wp/v2/kataloge/{id}:
+    get:
+      operationId: getKatalogeItem
+      summary: Get one of the Kataloge (downloadable product catalogs)
+      description: Returns a single published `kataloge` object by its numeric ID.
+      tags:
+      - kataloge
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Katalog'
+        '404': *id001
+  /wp/v2/testimonial:
+    get:
+      operationId: listTestimonial
+      summary: List Customer testimonials
+      description: Returns a paginated collection of published `testimonial` objects from the Lendis WordPress
+        content API.
+      tags:
+      - testimonial
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Testimonial'
+        '400': *id001
+  /wp/v2/testimonial/{id}:
+    get:
+      operationId: getTestimonialItem
+      summary: Get one of the Customer testimonials
+      description: Returns a single published `testimonial` object by its numeric ID.
+      tags:
+      - testimonial
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the object.
+        schema:
+          type: integer
+      - name: _fields
+        in: query
+        description: Limit the response to a comma-separated list of fields.
+        schema:
+          type: string
+      - name: _embed
+        in: query
+        description: Embed linked resources into the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Testimonial'
+        '404': *id001
+  /wp/v2/categories:
+    get:
+      operationId: listCategories
+      summary: List Post categories
+      description: Returns a paginated collection of terms in the `categories` taxonomy.
+      tags:
+      - taxonomies
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400': *id001
+  /wp/v2/categories/{id}:
+    get:
+      operationId: getCategoriesItem
+      summary: Get a single term from Post categories
+      description: Returns a single term in the `categories` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404': *id001
+  /wp/v2/tags:
+    get:
+      operationId: listTags
+      summary: List Post tags
+      description: Returns a paginated collection of terms in the `tags` taxonomy.
+      tags:
+      - taxonomies
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400': *id001
+  /wp/v2/tags/{id}:
+    get:
+      operationId: getTagsItem
+      summary: Get a single term from Post tags
+      description: Returns a single term in the `tags` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404': *id001
+  /wp/v2/ratgeber-kategorien:
+    get:
+      operationId: listRatgeberKategorien
+      summary: List Ratgeber categories
+      description: Returns a paginated collection of terms in the `ratgeber-kategorien` taxonomy.
+      tags:
+      - taxonomies
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400': *id001
+  /wp/v2/ratgeber-kategorien/{id}:
+    get:
+      operationId: getRatgeberKategorienItem
+      summary: Get a single term from Ratgeber categories
+      description: Returns a single term in the `ratgeber-kategorien` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404': *id001
+  /wp/v2/letter:
+    get:
+      operationId: listLetter
+      summary: List Wiki letter taxonomy terms
+      description: Returns a paginated collection of terms in the `letter` taxonomy.
+      tags:
+      - taxonomies
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+        '400': *id001
+  /wp/v2/letter/{id}:
+    get:
+      operationId: getLetterItem
+      summary: Get a single term from Wiki letter taxonomy terms
+      description: Returns a single term in the `letter` taxonomy by its numeric ID.
+      tags:
+      - taxonomies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The requested term.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404': *id001
+  /wp/v2:
+    get:
+      operationId: getNamespaceIndex
+      summary: Get the wp/v2 namespace route index
+      description: 'Returns the machine-readable route index for the `wp/v2` namespace: every route, its
+        supported methods and argument schemas. This is the discovery document this OpenAPI was derived
+        from.'
+      tags:
+      - discovery
+      parameters: []
+      responses:
+        '200':
+          description: Namespace route index.
+          content:
+            application/json:
+              schema:
+                type: object
+  /wp/v2/types:
+    get:
+      operationId: listTypes
+      summary: List registered content types
+      description: Returns every post type registered on the Lendis site, keyed by type name, including
+        its `rest_base` and associated taxonomies.
+      tags:
+      - discovery
+      parameters: []
+      responses:
+        '200':
+          description: Map of registered content types.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ContentType'
+  /wp/v2/taxonomies:
+    get:
+      operationId: listTaxonomies
+      summary: List registered taxonomies
+      description: Returns every taxonomy registered on the Lendis site, keyed by taxonomy name.
+      tags:
+      - discovery
+      parameters: []
+      responses:
+        '200':
+          description: Map of registered taxonomies.
+          content:
+            application/json:
+              schema:
+                type: object
+  /wp/v2/search:
+    get:
+      operationId: searchContent
+      summary: Search across content types
+      description: Full-text search across the Lendis site's searchable content types, returning lightweight
+        result stubs carrying id, title, url, type and subtype.
+      tags:
+      - discovery
+      parameters: *id002
+      responses:
+        '200':
+          description: A paginated collection of objects.
+          headers:
+            X-WP-Total:
+              description: Total number of items in the collection.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 Link header carrying rel="next" / rel="prev" pagination links.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+        '400': *id001
+components:
+  schemas:
+    Post:
+      type: object
+      description: A blog post (`post`) from the Lendis Magazin.
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+        categories:
+          type: array
+          items:
+            type: integer
+          description: IDs of terms assigned to the object in the category taxonomy.
+        tags:
+          type: array
+          items:
+            type: integer
+          description: IDs of terms assigned to the object in the post_tag taxonomy.
+        sticky:
+          type: boolean
+          description: Whether the object should be treated as sticky.
+        format:
+          type: string
+          description: The format for the object.
+    Page:
+      type: object
+      description: A site page (`page`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+        parent:
+          type: integer
+          description: The ID of the parent of the object.
+        menu_order:
+          type: integer
+          description: The order of the object relative to other objects of its type.
+    MediaItem:
+      type: object
+      description: A media-library item (`attachment`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+        alt_text:
+          type: string
+          description: Alternative text to display when the attachment is not displayed.
+        caption:
+          type: object
+          description: The attachment caption.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        media_type:
+          type: string
+          description: Attachment type.
+          enum:
+          - image
+          - file
+        mime_type:
+          type: string
+          description: The attachment MIME type.
+        source_url:
+          type: string
+          format: uri
+          description: URL to the original attachment file.
+        media_details:
+          type: object
+          description: Details about the media file specific to its type (width, height, generated sizes).
+    WikiEntry:
+      type: object
+      description: A Lendis Wiki glossary entry (`wiki`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+        letter:
+          type: array
+          items:
+            type: integer
+          description: IDs of terms assigned to the object in the letter taxonomy.
+    RatgeberEntry:
+      type: object
+      description: A Ratgeber (buyer's guide) entry (`ratgeber`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+        ratgeber-kategorien:
+          type: array
+          items:
+            type: integer
+          description: IDs of terms assigned to the object in the ratgeber-kategorien taxonomy.
+    CaseStudy:
+      type: object
+      description: A customer case study (`case-study`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+    Katalog:
+      type: object
+      description: A downloadable product catalog (`kataloge`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+    Testimonial:
+      type: object
+      description: A customer testimonial (`testimonial`).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the object.
+        date:
+          type: string
+          format: date-time
+          description: The date the object was published, in the site's timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: The date the object was published, as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: The date the object was last modified, in the site's timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: The date the object was last modified, as GMT.
+        guid:
+          type: object
+          description: The globally unique identifier for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the object unique to its type.
+        status:
+          type: string
+          description: A named status for the object.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        type:
+          type: string
+          description: Post type of the object.
+        link:
+          type: string
+          format: uri
+          description: URL to the object on the public site.
+        title:
+          type: object
+          description: The title for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        content:
+          type: object
+          description: The content for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        excerpt:
+          type: object
+          description: The excerpt for the object.
+          properties:
+            rendered:
+              type: string
+              description: HTML-rendered value.
+        author:
+          type: integer
+          description: The ID for the author of the object.
+        featured_media:
+          type: integer
+          description: The ID of the featured media for the object.
+        template:
+          type: string
+          description: The theme file used to display the object.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources (self, collection, author, wp:term,
+            wp:featuredmedia).
+    Term:
+      type: object
+      description: A taxonomy term (category, tag, wiki letter, or Ratgeber category).
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the term.
+        count:
+          type: integer
+          description: Number of published objects assigned to the term.
+        description:
+          type: string
+          description: HTML description of the term.
+        link:
+          type: string
+          format: uri
+          description: URL of the term archive.
+        name:
+          type: string
+          description: HTML title for the term.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the term unique to its type.
+        taxonomy:
+          type: string
+          description: Taxonomy the term belongs to.
+        parent:
+          type: integer
+          description: The parent term ID.
+        _links:
+          type: object
+          description: HAL-style link relations for the term.
+    ContentType:
+      type: object
+      description: A registered WordPress post type.
+      properties:
+        name:
+          type: string
+          description: The human-readable title for the post type.
+        slug:
+          type: string
+          description: An alphanumeric identifier for the post type.
+        rest_base:
+          type: string
+          description: REST base route for the post type.
+        taxonomies:
+          type: array
+          items:
+            type: string
+          description: Taxonomies associated with the post type.
+        hierarchical:
+          type: boolean
+          description: Whether the post type supports children.
+    SearchResult:
+      type: object
+      description: A lightweight search result stub.
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the matched object.
+        title:
+          type: string
+          description: The title for the matched object.
+        url:
+          type: string
+          format: uri
+          description: URL to the matched object.
+        type:
+          type: string
+          description: Object type.
+        subtype:
+          type: string
+          description: Object subtype.
+        _links:
+          type: object
+          description: HAL-style link relations.
+    Error:
+      type: object
+      description: 'The WordPress REST API error envelope. This is NOT RFC 9457 problem+json: it is served
+        as application/json with a WordPress-specific shape.'
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. rest_forbidden, rest_post_invalid_id,
+            rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message, localised to the site language (German on www.lendis.io).
+        data:
+          type: object
+          description: Structured error data.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+  responses:
+    Error:
+      description: WordPress REST API error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            forbidden:
+              summary: Anonymous call to a privileged route (observed live on /wp/v2/settings)
+              value:
+                code: rest_forbidden
+                message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+                data:
+                  status: 401
+            invalidId:
+              summary: Unknown object ID (observed live on /wp/v2/posts/99999999)
+              value:
+                code: rest_post_invalid_id
+                message: Die Beitrags-ID ist ungültig.
+                data:
+                  status: 404
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords (username plus application password) sent as HTTP Basic
+        over TLS. Required for write operations and privileged routes; anonymous read access needs no
+        credentials.
+    nonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: Cookie-authenticated first-party browser requests send a WordPress nonce in the X-WP-Nonce
+        header, advertised in Access-Control-Allow-Headers on live responses.
+security: []

@@ -1,0 +1,65 @@
+# Lendis
+
+> Lendis ist ein deutsches B2B-Technologieunternehmen, das IT-Hardware im Device-as-a-Service-Modell (DaaS) an mittelständische Unternehmen vermietet. Das Angebot umfasst Beschaffung, Konfiguration, Lifecycle-Management und persönlichen IT-Support aus einer Hand.
+
+Lendis richtet sich an Unternehmen mit 50 bis 500 Mitarbeitenden, die ihre IT-Infrastruktur flexibel, kosteneffizient und ohne eigene IT-Ressourcen managen möchten. Das Modell ersetzt Kapitalbindung durch monatliche Mietraten und übergibt den gesamten Hardware-Lifecycle an Lendis.
+
+## Leistungen
+
+- [Device as a Service (DaaS)](https://www.lendis.io/device-as-a-service/): Vollständiges IT-Hardware-Mietmodell inkl. Lifecycle-Management, Support und LendisOS-Plattform
+- [Laptop Leasing](https://www.lendis.io/bueroausstattung/technik/laptops/): Flexible Mietlösung für Laptops und Notebooks bekannter Hersteller (Apple, Dell, Lenovo, HP u.a.)
+- [Smartphone Leasing](https://www.lendis.io/bueroausstattung/technik/smartphones/): Flexible Mietlösung für Firmenhandys bekannter Hersteller (Apple, Samsung, Google, u.a.)
+- [IT-Hardware-Leasing mieten](https://www.lendis.io/it-hardware-leasing/): Ausstattung für Teams – Laptops, Smartphones, Monitore, Zubehör
+- [LendisOS](https://www.lendis.io/lendis-os/): Webbasierte Plattform für Beschaffung, Inventarisierung, Support-Management und Offboarding von Geräten
+- [Finanzierung](https://www.lendis.io/services/finanzierung/): Zugang zu mehr als 10 Finanzierungspartnern; über 90 % bewilligte Anfragen
+
+## Zielgruppe
+
+Mittelständische Unternehmen (KMU) mit 50–500 Mitarbeitenden in Deutschland, insbesondere in Wachstumsphasen (Scale-ups) sowie etablierter Mittelstand mit hohem IT-Aufwand. Typische Entscheidungsträger: Geschäftsführung, IT-Leitung, Operations- und Finance-Teams.
+
+## Kernnutzen
+
+- Reduzierung des IT-Aufwands um bis zu 60 % durch ausgelagertes Lifecycle-Management
+- Keine Kapitalbindung: monatliche Mietraten statt hoher Einmalinvestitionen
+- Schnelleres Onboarding: Geräte vorkonfiguriert und versandfertig in 4,5 Stunden
+- Persönlicher IT-Support direkt erreichbar unter +49 30 311 99 676 (kein Ticketsystem)
+- Gesamtkostenvergleich (TCO): Mietmodell vs. Kauf transparent kalkulierbar
+
+## Unternehmensinfos
+
+- **Unternehmensname:** Lendis GmbH
+- **Hauptsitz:** Berlin, Deutschland
+- **Gegründet:** 2018
+- **Märkte:** Deutschland (Primärmarkt), Europäische Union
+- **Sprache:** Deutsch (B2B)
+- **Kundenbewertung:** 4,9 / 5,0 (Trustpilot / Google)
+- **Website:** https://www.lendis.io
+
+## Wichtige Seiten
+
+- [Startseite](https://www.lendis.io/)
+- [Device as a Service](https://www.lendis.io/device-as-a-service/)
+- [Laptop Leasing](https://www.lendis.io/bueroausstattung/technik/laptops/)
+- [IT-Hardware Leasing](https://www.lendis.io/it-hardware-leasing/)
+- [LendisOS Plattform](https://www.lendis.io/lendis-os/)
+- [Über uns](https://www.lendis.io/ueber-uns/)
+- [Ratgeber](https://www.lendis.io/ratgeber/
+- [Blog / Ressourcen](https://www.lendis.io/magazin/)
+- [Kontakt & Anfrage](https://www.lendis.io/kontakt/)
+- [Impressum](https://www.lendis.io/impressum/)
+
+## Nicht enthalten
+
+Diese Datei beschreibt ausschließlich das öffentliche Leistungsangebot und Unternehmensprofil von Lendis. Kundendaten, Vertragsdetails, interne Prozesse und Pricing-Konditionen einzelner Angebote sind nicht enthalten und nicht für die KI-Verarbeitung freigegeben.
+
+## Kontakt
+
+- **Website:** https://www.lendis.io
+- **Telefon:** +49 30 311 99 676
+- **E-Mail:** info@lendis.io
+- **LinkedIn:** https://www.linkedin.com/company/lendis
+
+---
+Version: 1.0
+Zuletzt aktualisiert: 2026-06-11
+Canonical: https://www.lendis.io/llms.txt

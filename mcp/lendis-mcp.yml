@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/lendis-content-openapi.yml
+searched:
+  official_server: null
+  note: >-
+    No official or hosted Lendis MCP server exists. Searched the Lendis site, the lendis-tech
+    GitHub org, npm (@modelcontextprotocol and lendis namespaces) and the public MCP registries
+    - nothing published. The tool list below is a CANDIDATE derived from the read-only
+    operations in the repo OpenAPI, not a server Lendis operates.
+server:
+  name: lendis-content
+  transport: stdio
+  url: null
+  base_url: https://www.lendis.io/wp-json
+  auth: none required for the read-only surface
+tools:
+- name: list_posts
+  description: List blog posts from the Lendis Magazin, newest first. Supports search, paging
+    and field selection.
+  source_operation: openapi/lendis-content-openapi.yml#listPosts
+- name: get_post
+  description: Fetch a single Lendis Magazin blog post by its numeric ID.
+  source_operation: openapi/lendis-content-openapi.yml#getPostsItem
+- name: list_pages
+  description: List pages on the Lendis site.
+  source_operation: openapi/lendis-content-openapi.yml#listPages
+- name: get_page
+  description: Fetch a single Lendis site page by its numeric ID.
+  source_operation: openapi/lendis-content-openapi.yml#getPagesItem
+- name: list_wiki_entries
+  description: List Lendis Wiki glossary entries explaining IT-procurement and Device-as-a-Service
+    terminology.
+  source_operation: openapi/lendis-content-openapi.yml#listWiki
+- name: get_wiki_entry
+  description: Fetch a single Lendis Wiki glossary entry by its numeric ID.
+  source_operation: openapi/lendis-content-openapi.yml#getWikiItem
+- name: list_guides
+  description: List Ratgeber buyer's guides covering IT equipment selection and procurement.
+  source_operation: openapi/lendis-content-openapi.yml#listRatgeber
+- name: get_guide
+  description: Fetch a single Ratgeber buyer's guide by its numeric ID.
+  source_operation: openapi/lendis-content-openapi.yml#getRatgeberItem
+- name: list_case_studies
+  description: List Lendis customer case studies.
+  source_operation: openapi/lendis-content-openapi.yml#listCaseStudy
+- name: get_case_study
+  description: Fetch a single Lendis customer case study by its numeric ID.
+  source_operation: openapi/lendis-content-openapi.yml#getCaseStudyItem
+- name: list_catalogs
+  description: List downloadable Lendis product catalogs.
+  source_operation: openapi/lendis-content-openapi.yml#listKataloge
+- name: get_catalog
+  description: Fetch a single downloadable Lendis product catalog by its numeric ID.
+  source_operation: openapi/lendis-content-openapi.yml#getKatalogeItem
+- name: list_testimonials
+  description: List Lendis customer testimonials.
+  source_operation: openapi/lendis-content-openapi.yml#listTestimonial
+- name: list_categories
+  description: List blog post categories.
+  source_operation: openapi/lendis-content-openapi.yml#listCategories
+- name: list_tags
+  description: List blog post tags.
+  source_operation: openapi/lendis-content-openapi.yml#listTags
+- name: list_guide_categories
+  description: List Ratgeber categories.
+  source_operation: openapi/lendis-content-openapi.yml#listRatgeberKategorien
+- name: list_wiki_letters
+  description: List the alphabetical letter groupings used to index the Lendis Wiki.
+  source_operation: openapi/lendis-content-openapi.yml#listLetter
+- name: search_content
+  description: Full-text search across every searchable Lendis content type, returning stubs
+    with id, title, url, type and subtype.
+  source_operation: openapi/lendis-content-openapi.yml#searchContent
+- name: list_content_types
+  description: List every content type registered on the Lendis site with its REST base and
+    taxonomies.
+  source_operation: openapi/lendis-content-openapi.yml#listTypes
+- name: list_media
+  description: List media-library items including images and downloadable PDFs.
+  source_operation: openapi/lendis-content-openapi.yml#listMedia
+tool_count: 20
+excluded:
+  - reason: write and privileged operations are excluded from the candidate tool surface
+    routes: [/wp/v2/settings, /wp/v2/plugins, /wp/v2/users, all POST/PUT/PATCH/DELETE methods]

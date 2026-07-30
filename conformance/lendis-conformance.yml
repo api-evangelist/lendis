@@ -1,0 +1,98 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lendis-content-openapi.yml, conventions/lendis-conventions.yml, live response
+  headers from https://www.lendis.io/wp-json/wp/v2, and probes of the Lendis public site
+scope: >-
+  Cross-cutting standards conformance for the public Lendis WordPress REST content API, plus the
+  company's published compliance posture. Lendis publishes no trust center, no certification
+  page and no compliance program of any kind, so no apis.yml Compliance pointer is emitted.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/lendis-content-openapi.yml is OpenAPI 3.1.0, derived by API Evangelist from
+    the API's own live route index. Lendis publishes no OpenAPI itself.
+  authored_by: api-evangelist
+- id: rest
+  conforms: true
+  evidence: Resource-oriented URIs, HTTP verb semantics, JSON representations, HTTP status codes.
+- id: hal-style-links
+  conforms: partial
+  evidence: Every object carries a _links object with self, collection, about, author, wp:term
+    and wp:featuredmedia relations, and _embed inlines them into _embedded. This follows the
+    WordPress REST convention, which is HAL-influenced but not conformant HAL (no application/hal+json
+    media type).
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: 'Collection responses return a Link header with rel="next" / rel="prev" - observed
+    live on GET /wp/v2/posts?per_page=2.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are served as application/json with the WordPress envelope
+    {code, message, data.status}, not application/problem+json. See errors/lendis-problem-types.yml.
+- id: pagination
+  conforms: true
+  evidence: page / per_page query parameters with X-WP-Total and X-WP-TotalPages response
+    headers plus RFC 8288 Link navigation.
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key header, no deduplication window and no retry-safety contract.
+    Only HTTP method semantics apply.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in the spec and no OAuth documentation. Authentication is
+    HTTP Basic with a WordPress Application Password, or an X-WP-Nonce cookie nonce.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on www.lendis.io. The 200 on
+    app.lendis.io is a single-page-application HTML fallback, not an OIDC discovery document.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on any Lendis host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation headers observed; no deprecation policy published.
+- id: cors
+  conforms: true
+  evidence: 'Access-Control-Allow-Headers advertises Authorization, X-WP-Nonce,
+    Content-Disposition, Content-MD5, Content-Type; Access-Control-Expose-Headers advertises
+    X-WP-Total, X-WP-TotalPages, Link.'
+- id: tls-1.3
+  conforms: true
+  evidence: www.lendis.io negotiates TLSv1.3. See security/lendis-domain-security.yml.
+- id: hsts
+  conforms: false
+  evidence: No Strict-Transport-Security header on www.lendis.io.
+- id: dnssec
+  conforms: false
+  evidence: lendis.io is not DNSSEC-signed.
+- id: spf
+  conforms: false
+  evidence: No SPF TXT record on lendis.io despite Google Workspace MX records.
+- id: dmarc
+  conforms: false
+  evidence: No DMARC record at _dmarc.lendis.io.
+- id: caa
+  conforms: false
+  evidence: No CAA records on lendis.io.
+- id: llmstxt
+  conforms: true
+  evidence: https://www.lendis.io/llms.txt is published, versioned (1.0, updated 2026-06-11) and
+    self-canonical. Captured verbatim at llms/lendis-llms.txt.
+- id: gdpr
+  conforms: unknown
+  evidence: Lendis is a German GmbH operating in the EU and publishes a Datenschutzerklärung at
+    https://www.lendis.io/datenschutz/ plus a OneTrust cookie banner, but makes no explicit
+    compliance or certification claim. Recorded as unknown rather than asserted.
+- id: soc2
+  conforms: false
+  evidence: No SOC 2 claim found on any Lendis surface.
+- id: iso27001
+  conforms: false
+  evidence: No ISO 27001 claim found on any Lendis surface.
+compliance_program:
+  published: false
+  trust_center: null
+  certifications: []
+  note: No trust center, no certification listing, no security or compliance page. Probed
+    trust.lendis.io, security.lendis.io and the /trust, /security and /compliance paths - none
+    resolve or exist.

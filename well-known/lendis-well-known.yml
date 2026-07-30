@@ -1,0 +1,70 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of the /.well-known/ surface on each Lendis host
+notes: >-
+  Probed every host reachable from apis.yml and the OpenAPI servers[]. The marketing host
+  www.lendis.io returns a clean 404 for every /.well-known/ document but does publish a real
+  llms.txt at the site root (captured verbatim at llms/lendis-llms.txt). app.lendis.io is a
+  single-page application that serves its index.html with HTTP 200 for ANY unmatched path, so its
+  apparent 200 responses for /.well-known/security.txt, /.well-known/openid-configuration and
+  /llms.txt are SPA fallbacks returning text/html, not real documents - they are recorded here as
+  soft_200 and no file was saved. api.lendis.io is a private AWS API Gateway that answers every
+  path with 403 {"message":"Missing Authentication Token"}.
+hosts:
+- host: https://www.lendis.io
+  role: marketing site and public WordPress REST content API
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/lendis-llms.txt
+    content_type: text/plain
+  - path: /robots.txt
+    status: 200
+  - path: /wp-json/
+    status: 200
+    content_type: application/json
+    note: WordPress REST API root; the wp/v2 namespace index is the discovery document the
+      repo OpenAPI was derived from.
+- host: https://app.lendis.io
+  role: LendisOS customer platform (single-page application)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: soft_200
+    note: SPA index.html returned as text/html, not a security.txt. Not saved.
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: soft_200
+    note: SPA index.html returned as text/html, not an OIDC discovery document. Not saved.
+  - path: /llms.txt
+    status: 200
+    result: soft_200
+    note: SPA index.html returned as text/html. Not saved.
+- host: https://api.lendis.io
+  role: private AWS API Gateway backing LendisOS
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /openapi.json
+    status: 403
+  - path: /
+    status: 403
+    note: 'Responds {"message":"Missing Authentication Token"} - an unauthenticated AWS API
+      Gateway. No public routes, no public documentation.'
+security_txt:
+  present: false
+  note: No RFC 9116 security.txt is published on any Lendis host.

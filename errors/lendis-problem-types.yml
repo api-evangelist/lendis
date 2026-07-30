@@ -1,0 +1,80 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lendis-content-openapi.yml plus live error responses observed against
+  https://www.lendis.io/wp-json/wp/v2
+api: lendis:content
+format: wordpress-rest
+rfc9457: false
+envelope:
+  media_type: application/json
+  fields:
+    code: Machine-readable WordPress error code (string).
+    message: Human-readable message, localised to the site language. On www.lendis.io this is
+      German.
+    data.status: HTTP status code, duplicated inside the body.
+  example:
+    code: rest_forbidden
+    message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+    data:
+      status: 401
+note: >-
+  These are WordPress core error codes, not a Lendis-authored error registry - Lendis publishes
+  no error reference. The two entries marked observed: true were captured live against
+  www.lendis.io; the remainder are standard wp/v2 codes reachable on this deployment.
+problems:
+- code: rest_forbidden
+  status: 401
+  title: Not permitted
+  observed: true
+  observed_on: GET https://www.lendis.io/wp-json/wp/v2/settings
+  message_de: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+  meaning: The caller lacks the capability required for this route. Returned to anonymous
+    callers on privileged routes such as /wp/v2/settings and /wp/v2/plugins.
+  remediation: Authenticate with a WordPress Application Password over HTTP Basic, or accept
+    that the route is not part of the public read surface.
+- code: rest_post_invalid_id
+  status: 404
+  title: Invalid object ID
+  observed: true
+  observed_on: GET https://www.lendis.io/wp-json/wp/v2/posts/99999999
+  message_de: Die Beitrags-ID ist ungültig.
+  meaning: No object of the requested post type exists with that numeric ID, or it is not
+    published and therefore not visible to an anonymous caller.
+  remediation: List the collection first and read IDs from the response rather than guessing.
+  source_operation: openapi/lendis-content-openapi.yml#getPostsItem
+- code: rest_no_route
+  status: 404
+  title: No route matched
+  observed: false
+  meaning: The requested path does not match any registered route in the namespace.
+  remediation: Fetch GET /wp-json/wp/v2 and pick a route from the discovery index.
+  source_operation: openapi/lendis-content-openapi.yml#getNamespaceIndex
+- code: rest_invalid_param
+  status: 400
+  title: Invalid parameter
+  observed: false
+  meaning: A query parameter failed schema validation - for example per_page above 100 or a
+    non-integer page.
+  remediation: Check the argument schema for the route in the wp/v2 discovery index; per_page
+    is capped at 100 and page must be a positive integer.
+  source_operation: openapi/lendis-content-openapi.yml#listPosts
+- code: rest_post_invalid_page_number
+  status: 400
+  title: Page number out of range
+  observed: false
+  meaning: The requested page exceeds X-WP-TotalPages for the collection.
+  remediation: Read X-WP-TotalPages from the first response and stop paging at that bound, or
+    follow the Link rel="next" header until it is absent.
+- code: rest_cannot_view
+  status: 401
+  title: Cannot view resource
+  observed: false
+  meaning: The object exists but the caller is not permitted to read it in the requested
+    context (for example context=edit without credentials).
+  remediation: Drop back to the default context=view, or authenticate.
+- code: rest_forbidden_context
+  status: 403
+  title: Forbidden context
+  observed: false
+  meaning: The caller requested a context (edit, embed) they are not permitted to use.
+  remediation: Use context=view for anonymous reads.
