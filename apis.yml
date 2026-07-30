@@ -1,8 +1,28 @@
 aid: lendis
 name: Lendis
-description: 'Lendis is a company surfaced as a portfolio company of hv-capital and added to the API Evangelist
-  network as a stub for enrichment. Sector: ai-enterprise-software. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: 'Lendis GmbH is a Berlin-based B2B technology company, founded in 2018, that rents IT hardware
+  to German small and mid-sized businesses under a Device-as-a-Service (DaaS) model. Lendis bundles hardware
+  procurement, configuration and staging, delivery logistics, financing, IT support, lifecycle management
+  and device offboarding into a single monthly rental rate, and manages the whole estate through LendisOS,
+  a web platform covering a self-service shop, order tracking, asset inventory and contract management.
+  The company targets organisations of roughly 50 to 500 employees that want to avoid tying up capital in
+  laptops, smartphones, monitors and accessories. Lendis publishes no public developer program; its
+  commercial platform runs on a private AWS API Gateway at api.lendis.io. Its marketing site does expose
+  a public read-only WordPress REST content API, and Lendis publishes a machine-readable llms.txt for AI
+  agents.'
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://res.cloudinary.com/lendis-gmbh/images/f_svg,q_auto/fl_sanitize/v1774942862/www.lendis.io/lendis-logo-it/lendis-logo-it.svg
 url: https://raw.githubusercontent.com/api-evangelist/lendis/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,13 +32,261 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Ai Enterprise Software
-apis: []
+- Device As A Service
+- IT Hardware
+- Leasing
+- Asset Management
+- Workplace Technology
+- Procurement
+- Germany
+- SaaS
+apis:
+- aid: lendis:lendis-case-study-api
+  name: Lendis case-study API
+  description: Customer case studies
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - case-study
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-case-study-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-discovery-api
+  name: Lendis discovery API
+  description: Route, type and taxonomy discovery plus site-wide search
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-discovery-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-kataloge-api
+  name: Lendis kataloge API
+  description: Kataloge (downloadable product catalogs)
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - kataloge
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-kataloge-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-media-api
+  name: Lendis media API
+  description: Medien (media library items)
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - media
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-media-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-pages-api
+  name: Lendis pages API
+  description: Seiten (site pages)
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - pages
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-pages-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-posts-api
+  name: Lendis posts API
+  description: Beitraege (blog posts from the Lendis Magazin)
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - posts
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-posts-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-ratgeber-api
+  name: Lendis ratgeber API
+  description: Ratgeber (buyer's guides)
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - ratgeber
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-ratgeber-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-taxonomies-api
+  name: Lendis taxonomies API
+  description: 'Taxonomy terms: categories, tags, wiki letters, Ratgeber categories'
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-taxonomies-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-testimonial-api
+  name: Lendis testimonial API
+  description: Customer testimonials
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - testimonial
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-testimonial-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+- aid: lendis:lendis-wiki-api
+  name: Lendis wiki API
+  description: Wiki glossary entries
+  humanURL: https://www.lendis.io/magazin/
+  baseURL: https://www.lendis.io/wp-json
+  tags:
+  - wiki
+  properties:
+  - type: OpenAPI
+    url: openapi/lendis-wiki-api-openapi.yml
+  - type: Authentication
+    url: authentication/lendis-authentication.yml
+  - type: Conventions
+    url: conventions/lendis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/lendis-problem-types.yml
+  - type: DataModel
+    url: data-model/lendis-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/lendis-lifecycle.yml
+common:
+- type: AgenticAccess
+  url: agentic-access/lendis-agentic-access.yml
+- type: Website
+  url: https://www.lendis.io
+- type: Blog
+  url: https://www.lendis.io/magazin/
+- type: Support
+  url: https://www.lendis.io/kontakt/
+- type: HelpCenter
+  url: https://www.lendis.io/faq/
+- type: Login
+  url: https://app.lendis.io/login
+- type: TermsOfService
+  url: https://www.lendis.io/agb/
+- type: PrivacyPolicy
+  url: https://www.lendis.io/datenschutz/
+- type: GitHubOrganization
+  url: https://github.com/lendis-tech
+- type: LinkedIn
+  url: https://www.linkedin.com/company/lendis/
+- type: YouTube
+  url: https://www.youtube.com/@lendis_io
+- type: Careers
+  url: https://www.lendis.io/karriere/
+- type: LLMsTxt
+  url: llms/lendis-llms.txt
+- type: WellKnown
+  url: well-known/lendis-well-known.yml
+- type: Packages
+  url: packages/lendis-packages.yml
+- type: Conformance
+  url: conformance/lendis-conformance.yml
+- type: DomainSecurity
+  url: security/lendis-domain-security.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
