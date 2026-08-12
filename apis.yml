@@ -246,6 +246,12 @@ apis:
   - type: Lifecycle
     url: lifecycle/lendis-lifecycle.yml
 common:
+- type: AgentSkill
+  url: skills/lendis-harvest-catalog.md
+- type: MCPServer
+  url: mcp/lendis-mcp.yml
+- type: Overlay
+  url: overlays/lendis-content-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/lendis-agentic-access.yml
 - type: Website
