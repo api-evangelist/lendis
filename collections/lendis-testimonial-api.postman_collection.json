@@ -1,0 +1,459 @@
+{
+  "item": [
+    {
+      "id": "559622ef-cd46-431e-9cdc-00b2a3d7ad8b",
+      "name": "testimonial",
+      "description": {
+        "content": "Customer testimonials",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2fe95628-0855-4d91-bbe5-4aeda7316a01",
+          "name": "List Customer testimonials",
+          "request": {
+            "name": "List Customer testimonials",
+            "description": {
+              "content": "Returns a paginated collection of published `testimonial` objects from the Lendis WordPress content API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "testimonial"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Current page of the collection."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Maximum number of items to be returned in the result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Limit results to those matching a string."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "desc",
+                  "description": "Order sort attribute ascending or descending."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "date",
+                  "description": "Sort collection by object attribute."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit the result set to objects with one or more specific slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit the result set to objects with one or more specific slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Limit the response to a comma-separated list of fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "_embed",
+                  "value": "<string>",
+                  "description": "Embed linked resources (author, featured media, terms) into the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "202af80c-4dd4-45bb-a98c-86d2de918fa9",
+              "name": "A paginated collection of objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "testimonial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Total number of items in the collection.",
+                  "key": "X-WP-Total",
+                  "value": "9913"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages available.",
+                  "key": "X-WP-TotalPages",
+                  "value": "9913"
+                },
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 Link header carrying rel=\"next\" / rel=\"prev\" pagination links.",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1209,\n    \"date\": \"1994-11-13T16:28:12.125Z\",\n    \"date_gmt\": \"2017-03-08T22:06:26.560Z\",\n    \"modified\": \"2005-04-03T04:30:18.328Z\",\n    \"modified_gmt\": \"2002-04-11T10:15:09.361Z\",\n    \"guid\": {\n      \"rendered\": \"string\"\n    },\n    \"slug\": \"string\",\n    \"status\": \"private\",\n    \"type\": \"string\",\n    \"link\": \"http://yMcZqnNMmNdkSXyWuKDVTjshX.afaQBwdpBH5pqjfkYnBHiWbHCl8G.bjRSdZo0US9KGcFmZ5PmIO\",\n    \"title\": {\n      \"rendered\": \"string\"\n    },\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"excerpt\": {\n      \"rendered\": \"string\"\n    },\n    \"author\": 8297,\n    \"featured_media\": 3993,\n    \"template\": \"string\",\n    \"_links\": {}\n  },\n  {\n    \"id\": 9985,\n    \"date\": \"2001-12-20T20:44:09.124Z\",\n    \"date_gmt\": \"2020-11-15T03:08:03.772Z\",\n    \"modified\": \"1998-08-07T04:44:16.418Z\",\n    \"modified_gmt\": \"1993-05-28T07:30:57.732Z\",\n    \"guid\": {\n      \"rendered\": \"string\"\n    },\n    \"slug\": \"string\",\n    \"status\": \"private\",\n    \"type\": \"string\",\n    \"link\": \"http://ceKDPNaUNgxjTfUlOdImxGeh.bicmH-3miKe2J,DO8YzAXUPPMEmKP6VF9wmJcTJRwrCl\",\n    \"title\": {\n      \"rendered\": \"string\"\n    },\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"excerpt\": {\n      \"rendered\": \"string\"\n    },\n    \"author\": 8730,\n    \"featured_media\": 4469,\n    \"template\": \"string\",\n    \"_links\": {}\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "facab4ee-57f7-4628-811a-27b400dafde2",
+              "name": "WordPress REST API error envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "testimonial"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_forbidden\",\n  \"message\": \"Du bist leider nicht berechtigt, diese Aktion durchzuführen.\",\n  \"data\": {\n    \"status\": 401\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7a3fd86-5198-42e5-9cb1-e702b697b108",
+          "name": "Get one of the Customer testimonials",
+          "request": {
+            "name": "Get one of the Customer testimonials",
+            "description": {
+              "content": "Returns a single published `testimonial` object by its numeric ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "testimonial",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Limit the response to a comma-separated list of fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "_embed",
+                  "value": "<string>",
+                  "description": "Embed linked resources into the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier for the object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a49b9255-54ca-46ec-b71b-7ba3f06cc738",
+              "name": "The requested object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "testimonial",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 7960,\n  \"date\": \"2012-11-09T11:52:05.051Z\",\n  \"date_gmt\": \"1994-05-04T20:52:32.302Z\",\n  \"modified\": \"1951-03-29T16:58:45.848Z\",\n  \"modified_gmt\": \"2024-06-06T06:10:22.225Z\",\n  \"guid\": {\n    \"rendered\": \"string\"\n  },\n  \"slug\": \"string\",\n  \"status\": \"private\",\n  \"type\": \"string\",\n  \"link\": \"https://RRgFPwrImPFurPwJYlUTRihxCEpH.dhfjM.pDpRenbrAlX4vE2tyvGgIiWsag-JZeqND6KjDEqi8LG,Ti7roeQr96YKtRfgSmOM8g,dmb81osnJmp\",\n  \"title\": {\n    \"rendered\": \"string\"\n  },\n  \"content\": {\n    \"rendered\": \"string\"\n  },\n  \"excerpt\": {\n    \"rendered\": \"string\"\n  },\n  \"author\": 4125,\n  \"featured_media\": 5452,\n  \"template\": \"string\",\n  \"_links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34bb5262-b19d-49a9-a396-bd8e48ae841b",
+              "name": "WordPress REST API error envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "testimonial",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_forbidden\",\n  \"message\": \"Du bist leider nicht berechtigt, diese Aktion durchzuführen.\",\n  \"data\": {\n    \"status\": 401\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.lendis.io/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "26562518-318c-49e7-9aef-b40503a3413f",
+    "name": "Lendis Content API (WordPress REST) case-study testimonial API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API's own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.\n\nContact Support:\n Name: Lendis GmbH\n Email: info@lendis.io",
+      "type": "text/plain"
+    }
+  }
+}

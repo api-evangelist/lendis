@@ -1,0 +1,459 @@
+{
+  "item": [
+    {
+      "id": "c49940f5-081f-434a-b129-0eeeb2719580",
+      "name": "posts",
+      "description": {
+        "content": "Beitraege (blog posts from the Lendis Magazin)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "57d1b7f4-646f-4750-a664-7b3de2a57651",
+          "name": "List Beitraege (blog posts from the Lendis Magazin)",
+          "request": {
+            "name": "List Beitraege (blog posts from the Lendis Magazin)",
+            "description": {
+              "content": "Returns a paginated collection of published `post` objects from the Lendis WordPress content API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Current page of the collection."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Maximum number of items to be returned in the result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Limit results to those matching a string."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "desc",
+                  "description": "Order sort attribute ascending or descending."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "date",
+                  "description": "Sort collection by object attribute."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit the result set to objects with one or more specific slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit the result set to objects with one or more specific slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Limit the response to a comma-separated list of fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "_embed",
+                  "value": "<string>",
+                  "description": "Embed linked resources (author, featured media, terms) into the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5e68a5d-0999-4454-b84c-203c6062e277",
+              "name": "A paginated collection of objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Total number of items in the collection.",
+                  "key": "X-WP-Total",
+                  "value": "4970"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages available.",
+                  "key": "X-WP-TotalPages",
+                  "value": "4970"
+                },
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 Link header carrying rel=\"next\" / rel=\"prev\" pagination links.",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3396,\n    \"date\": \"1986-03-16T06:32:45.075Z\",\n    \"date_gmt\": \"2010-01-04T18:34:35.015Z\",\n    \"modified\": \"2011-10-26T14:48:11.754Z\",\n    \"modified_gmt\": \"2019-07-03T02:30:24.219Z\",\n    \"guid\": {\n      \"rendered\": \"string\"\n    },\n    \"slug\": \"string\",\n    \"status\": \"future\",\n    \"type\": \"string\",\n    \"link\": \"https://TfMGOoWrBTKbXMobmEcFacHEgLHkDzASE.xsoyORJ88ePWAZ7DB+JmOUZ71q9rb02i,fn+Xrl,QCZEIw,XryYPLhWK4A8W+,qcObmn,aIeX\",\n    \"title\": {\n      \"rendered\": \"string\"\n    },\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"excerpt\": {\n      \"rendered\": \"string\"\n    },\n    \"author\": 5040,\n    \"featured_media\": 9466,\n    \"template\": \"string\",\n    \"_links\": {},\n    \"categories\": [\n      830,\n      4715\n    ],\n    \"tags\": [\n      8121,\n      3047\n    ],\n    \"sticky\": true,\n    \"format\": \"string\"\n  },\n  {\n    \"id\": 6492,\n    \"date\": \"1960-08-27T09:10:11.479Z\",\n    \"date_gmt\": \"1955-02-05T10:16:42.820Z\",\n    \"modified\": \"1972-06-29T14:39:08.353Z\",\n    \"modified_gmt\": \"2012-05-22T20:26:10.887Z\",\n    \"guid\": {\n      \"rendered\": \"string\"\n    },\n    \"slug\": \"string\",\n    \"status\": \"pending\",\n    \"type\": \"string\",\n    \"link\": \"http://lJEPUtKziuhqNqnyfoEqUc.jhtZs.x.+W-Lr\",\n    \"title\": {\n      \"rendered\": \"string\"\n    },\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"excerpt\": {\n      \"rendered\": \"string\"\n    },\n    \"author\": 663,\n    \"featured_media\": 9762,\n    \"template\": \"string\",\n    \"_links\": {},\n    \"categories\": [\n      5787,\n      2566\n    ],\n    \"tags\": [\n      4910,\n      2579\n    ],\n    \"sticky\": false,\n    \"format\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dd2e944-571a-4d83-9d3e-a2c19a88f57b",
+              "name": "WordPress REST API error envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_forbidden\",\n  \"message\": \"Du bist leider nicht berechtigt, diese Aktion durchzuführen.\",\n  \"data\": {\n    \"status\": 401\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55c83a03-4a72-4c03-b604-476804328a8d",
+          "name": "Get one of the Beitraege (blog posts from the Lendis Magazin)",
+          "request": {
+            "name": "Get one of the Beitraege (blog posts from the Lendis Magazin)",
+            "description": {
+              "content": "Returns a single published `post` object by its numeric ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "posts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Limit the response to a comma-separated list of fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "_embed",
+                  "value": "<string>",
+                  "description": "Embed linked resources into the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier for the object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6abecc98-6abb-40d0-8554-b668c5001fd2",
+              "name": "The requested object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2321,\n  \"date\": \"2008-06-17T19:55:44.867Z\",\n  \"date_gmt\": \"2022-09-28T21:44:54.262Z\",\n  \"modified\": \"2005-08-31T16:43:23.242Z\",\n  \"modified_gmt\": \"2001-11-06T19:38:08.413Z\",\n  \"guid\": {\n    \"rendered\": \"string\"\n  },\n  \"slug\": \"string\",\n  \"status\": \"future\",\n  \"type\": \"string\",\n  \"link\": \"http://THepmBQBJD.sjhoN9,bnWoPypaYFTBcrzUnHZpy36SPTDNRW25,zDcuD+yLzJA9G8G.SQ\",\n  \"title\": {\n    \"rendered\": \"string\"\n  },\n  \"content\": {\n    \"rendered\": \"string\"\n  },\n  \"excerpt\": {\n    \"rendered\": \"string\"\n  },\n  \"author\": 9417,\n  \"featured_media\": 5374,\n  \"template\": \"string\",\n  \"_links\": {},\n  \"categories\": [\n    201,\n    8069\n  ],\n  \"tags\": [\n    6179,\n    8006\n  ],\n  \"sticky\": false,\n  \"format\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab6af10e-c415-4201-8af4-6490f96bef4a",
+              "name": "WordPress REST API error envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_forbidden\",\n  \"message\": \"Du bist leider nicht berechtigt, diese Aktion durchzuführen.\",\n  \"data\": {\n    \"status\": 401\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.lendis.io/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f2ef3c3b-42fc-47c8-a30d-aa0d497342a8",
+    "name": "Lendis Content API (WordPress REST) case-study posts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API's own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.\n\nContact Support:\n Name: Lendis GmbH\n Email: info@lendis.io",
+      "type": "text/plain"
+    }
+  }
+}

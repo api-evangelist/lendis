@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lendis Content API (WordPress REST) case-study discovery API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the wp/v2 namespace route index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.lendis.io/wp-json/wp/v2"
+          },
+          "docs": "Returns the machine-readable route index for the `wp/v2` namespace: every route, its supported methods and argument schemas. This is the discovery document this OpenAPI was derived from."
+        },
+        {
+          "info": {
+            "name": "List registered content types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.lendis.io/wp-json/wp/v2/types"
+          },
+          "docs": "Returns every post type registered on the Lendis site, keyed by type name, including its `rest_base` and associated taxonomies."
+        },
+        {
+          "info": {
+            "name": "List registered taxonomies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.lendis.io/wp-json/wp/v2/taxonomies"
+          },
+          "docs": "Returns every taxonomy registered on the Lendis site, keyed by taxonomy name."
+        },
+        {
+          "info": {
+            "name": "Search across content types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.lendis.io/wp-json/wp/v2/search",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit the result set to objects with one or more specific slugs."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Limit the response to a comma-separated list of fields."
+              },
+              {
+                "name": "_embed",
+                "value": "",
+                "type": "query",
+                "description": "Embed linked resources (author, featured media, terms) into the response."
+              }
+            ]
+          },
+          "docs": "Full-text search across the Lendis site's searchable content types, returning lightweight result stubs carrying id, title, url, type and subtype."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
