@@ -43,6 +43,17 @@ tags:
 - Workplace Technology
 - Procurement
 - Germany
+- Software-as-a-Service
+tags_raw:
+- Company
+- Ai Enterprise Software
+- Device As A Service
+- IT Hardware
+- Leasing
+- Asset Management
+- Workplace Technology
+- Procurement
+- Germany
 - SaaS
 apis:
 - aid: lendis:lendis-case-study-api
@@ -71,6 +82,8 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
+  - Discovery
+  tags_raw:
   - discovery
   properties:
   - type: OpenAPI
@@ -111,6 +124,8 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
+  - Media
+  tags_raw:
   - media
   properties:
   - type: OpenAPI
@@ -131,6 +146,8 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
+  - Pages
+  tags_raw:
   - pages
   properties:
   - type: OpenAPI
@@ -151,6 +168,8 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
+  - Posts
+  tags_raw:
   - posts
   properties:
   - type: OpenAPI
@@ -231,6 +250,8 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
+  - Wiki
+  tags_raw:
   - wiki
   properties:
   - type: OpenAPI
