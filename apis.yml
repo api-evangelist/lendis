@@ -10,6 +10,18 @@ description: 'Lendis GmbH is a Berlin-based B2B technology company, founded in 2
   commercial platform runs on a private AWS API Gateway at api.lendis.io. Its marketing site does expose
   a public read-only WordPress REST content API, and Lendis publishes a machine-readable llms.txt for AI
   agents.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
