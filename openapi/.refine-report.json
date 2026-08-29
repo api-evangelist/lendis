@@ -27,6 +27,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "lendis-case-study-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-kataloge-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-media-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-pages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-posts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-ratgeber-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-taxonomies-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-testimonial-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lendis-wiki-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
