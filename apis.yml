@@ -242,6 +242,8 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
+  - Testimonial
+  tags_raw:
   - testimonial
   properties:
   - type: OpenAPI
@@ -262,7 +264,7 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
-  - Wiki
+  - wiki
   tags_raw:
   - wiki
   properties:
