@@ -264,7 +264,7 @@ apis:
   humanURL: https://www.lendis.io/magazin/
   baseURL: https://www.lendis.io/wp-json
   tags:
-  - wiki
+  - Wiki
   tags_raw:
   - wiki
   properties:
