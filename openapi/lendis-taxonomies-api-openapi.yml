@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Lendis Content API (WordPress REST) case-study Taxonomies API
+  title: Lendis Content API (WordPress REST) Taxonomies API
   version: wp/v2
   summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
-  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  description: The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace.
   contact:
     name: Lendis GmbH
     url: https://www.lendis.io/kontakt/
@@ -15,7 +15,7 @@ servers:
   description: Production WordPress REST API root for www.lendis.io
 security: []
 tags:
-- name: taxonomies
+- name: Taxonomies
   description: 'Taxonomy terms: categories, tags, wiki letters, Ratgeber categories'
 paths:
   /wp/v2/categories:
@@ -24,7 +24,7 @@ paths:
       summary: List Post categories
       description: Returns a paginated collection of terms in the `categories` taxonomy.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: page
         in: query
@@ -108,7 +108,7 @@ paths:
       summary: Get a single term from Post categories
       description: Returns a single term in the `categories` taxonomy by its numeric ID.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: id
         in: path
@@ -131,7 +131,7 @@ paths:
       summary: List Post tags
       description: Returns a paginated collection of terms in the `tags` taxonomy.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: page
         in: query
@@ -215,7 +215,7 @@ paths:
       summary: Get a single term from Post tags
       description: Returns a single term in the `tags` taxonomy by its numeric ID.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: id
         in: path
@@ -238,7 +238,7 @@ paths:
       summary: List Ratgeber categories
       description: Returns a paginated collection of terms in the `ratgeber-kategorien` taxonomy.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: page
         in: query
@@ -322,7 +322,7 @@ paths:
       summary: Get a single term from Ratgeber categories
       description: Returns a single term in the `ratgeber-kategorien` taxonomy by its numeric ID.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: id
         in: path
@@ -345,7 +345,7 @@ paths:
       summary: List Wiki letter taxonomy terms
       description: Returns a paginated collection of terms in the `letter` taxonomy.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: page
         in: query
@@ -429,7 +429,7 @@ paths:
       summary: Get a single term from Wiki letter taxonomy terms
       description: Returns a single term in the `letter` taxonomy by its numeric ID.
       tags:
-      - taxonomies
+      - Taxonomies
       parameters:
       - name: id
         in: path

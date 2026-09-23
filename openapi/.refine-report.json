@@ -1,16 +1,7 @@
 {
   "provider": "lendis",
   "sources": [
-    "lendis-case-study-api-openapi.yml",
-    "lendis-discovery-api-openapi.yml",
-    "lendis-kataloge-api-openapi.yml",
-    "lendis-media-api-openapi.yml",
-    "lendis-pages-api-openapi.yml",
-    "lendis-posts-api-openapi.yml",
-    "lendis-ratgeber-api-openapi.yml",
-    "lendis-taxonomies-api-openapi.yml",
-    "lendis-testimonial-api-openapi.yml",
-    "lendis-wiki-api-openapi.yml"
+    "_ae-authored/lendis-content-openapi.yml"
   ],
   "outputs": [
     "lendis-case-study-api-openapi.yml",
@@ -28,17 +19,20 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "lendis-case-study-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-kataloge-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-media-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-pages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-posts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-ratgeber-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-taxonomies-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-testimonial-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "lendis-wiki-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "lendis-content-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "lendis-case-study-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-kataloge-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-ratgeber-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-taxonomies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-testimonial-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lendis-wiki-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

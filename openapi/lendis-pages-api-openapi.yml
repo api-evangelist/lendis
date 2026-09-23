@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Lendis Content API (WordPress REST) case-study Pages API
+  title: Lendis Content API (WordPress REST) Pages API
   version: wp/v2
   summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
-  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  description: The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace.
   contact:
     name: Lendis GmbH
     url: https://www.lendis.io/kontakt/
@@ -15,7 +15,7 @@ servers:
   description: Production WordPress REST API root for www.lendis.io
 security: []
 tags:
-- name: pages
+- name: Pages
   description: Seiten (site pages)
 paths:
   /wp/v2/pages:
@@ -24,7 +24,7 @@ paths:
       summary: List Seiten (site pages)
       description: Returns a paginated collection of published `page` objects from the Lendis WordPress content API.
       tags:
-      - pages
+      - Pages
       parameters:
       - name: page
         in: query
@@ -108,7 +108,7 @@ paths:
       summary: Get one of the Seiten (site pages)
       description: Returns a single published `page` object by its numeric ID.
       tags:
-      - pages
+      - Pages
       parameters:
       - name: id
         in: path
@@ -137,23 +137,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    Error:
-      type: object
-      description: 'The WordPress REST API error envelope. This is NOT RFC 9457 problem+json: it is served as application/json with a WordPress-specific shape.'
-      properties:
-        code:
-          type: string
-          description: Machine-readable WordPress error code, e.g. rest_forbidden, rest_post_invalid_id, rest_no_route.
-        message:
-          type: string
-          description: Human-readable error message, localised to the site language (German on www.lendis.io).
-        data:
-          type: object
-          description: Structured error data.
-          properties:
-            status:
-              type: integer
-              description: HTTP status code.
     Page:
       type: object
       description: A site page (`page`).
@@ -242,6 +225,23 @@ components:
         menu_order:
           type: integer
           description: The order of the object relative to other objects of its type.
+    Error:
+      type: object
+      description: 'The WordPress REST API error envelope. This is NOT RFC 9457 problem+json: it is served as application/json with a WordPress-specific shape.'
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. rest_forbidden, rest_post_invalid_id, rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message, localised to the site language (German on www.lendis.io).
+        data:
+          type: object
+          description: Structured error data.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
   responses:
     Error:
       description: WordPress REST API error envelope.

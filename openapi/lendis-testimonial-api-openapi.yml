@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Lendis Content API (WordPress REST) case-study Testimonial API
+  title: Lendis Content API (WordPress REST) Testimonial API
   version: wp/v2
   summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
-  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  description: The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace.
   contact:
     name: Lendis GmbH
     url: https://www.lendis.io/kontakt/
@@ -15,7 +15,7 @@ servers:
   description: Production WordPress REST API root for www.lendis.io
 security: []
 tags:
-- name: testimonial
+- name: Testimonial
   description: Customer testimonials
 paths:
   /wp/v2/testimonial:
@@ -24,7 +24,7 @@ paths:
       summary: List Customer testimonials
       description: Returns a paginated collection of published `testimonial` objects from the Lendis WordPress content API.
       tags:
-      - testimonial
+      - Testimonial
       parameters:
       - name: page
         in: query
@@ -108,7 +108,7 @@ paths:
       summary: Get one of the Customer testimonials
       description: Returns a single published `testimonial` object by its numeric ID.
       tags:
-      - testimonial
+      - Testimonial
       parameters:
       - name: id
         in: path
@@ -136,28 +136,6 @@ paths:
         '404':
           $ref: '#/components/responses/Error'
 components:
-  responses:
-    Error:
-      description: WordPress REST API error envelope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            forbidden:
-              summary: Anonymous call to a privileged route (observed live on /wp/v2/settings)
-              value:
-                code: rest_forbidden
-                message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
-                data:
-                  status: 401
-            invalidId:
-              summary: Unknown object ID (observed live on /wp/v2/posts/99999999)
-              value:
-                code: rest_post_invalid_id
-                message: Die Beitrags-ID ist ungültig.
-                data:
-                  status: 404
   schemas:
     Error:
       type: object
@@ -258,6 +236,28 @@ components:
         _links:
           type: object
           description: HAL-style link relations to related resources (self, collection, author, wp:term, wp:featuredmedia).
+  responses:
+    Error:
+      description: WordPress REST API error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            forbidden:
+              summary: Anonymous call to a privileged route (observed live on /wp/v2/settings)
+              value:
+                code: rest_forbidden
+                message: Du bist leider nicht berechtigt, diese Aktion durchzuführen.
+                data:
+                  status: 401
+            invalidId:
+              summary: Unknown object ID (observed live on /wp/v2/posts/99999999)
+              value:
+                code: rest_post_invalid_id
+                message: Die Beitrags-ID ist ungültig.
+                data:
+                  status: 404
   securitySchemes:
     applicationPassword:
       type: http

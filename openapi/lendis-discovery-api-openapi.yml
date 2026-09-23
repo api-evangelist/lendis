@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Lendis Content API (WordPress REST) case-study Discovery API
+  title: Lendis Content API (WordPress REST) Discovery API
   version: wp/v2
   summary: Read-only public content API behind www.lendis.io exposing the Lendis Magazin, Ratgeber, Wiki, case studies and catalogs.
-  description: 'The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace. Anonymous callers get read access to the published content surface: blog posts (Magazin), pages, media, and the custom Lendis content types `wiki`, `ratgeber`, `case-study`, `kataloge` and `testimonial`, plus their taxonomies. Write operations and privileged routes such as `/wp/v2/settings` and `/wp/v2/plugins` require authentication and return HTTP 401 `rest_forbidden` to anonymous callers. This document was DERIVED by API Evangelist from the API''s own live route-discovery document at https://www.lendis.io/wp-json/wp/v2 and verified against live responses; it is not published by Lendis. Note: Lendis'' commercial platform (LendisOS at app.lendis.io, backed by the private AWS API Gateway at api.lendis.io) has no public API documentation or developer program as of this writing.'
+  description: The Lendis marketing site (www.lendis.io) runs on WordPress and exposes the standard WordPress REST API at https://www.lendis.io/wp-json/ under the `wp/v2` namespace.
   contact:
     name: Lendis GmbH
     url: https://www.lendis.io/kontakt/
@@ -15,7 +15,7 @@ servers:
   description: Production WordPress REST API root for www.lendis.io
 security: []
 tags:
-- name: discovery
+- name: Discovery
   description: Route, type and taxonomy discovery plus site-wide search
 paths:
   /wp/v2:
@@ -24,7 +24,7 @@ paths:
       summary: Get the wp/v2 namespace route index
       description: 'Returns the machine-readable route index for the `wp/v2` namespace: every route, its supported methods and argument schemas. This is the discovery document this OpenAPI was derived from.'
       tags:
-      - discovery
+      - Discovery
       parameters: []
       responses:
         '200':
@@ -39,7 +39,7 @@ paths:
       summary: List registered content types
       description: Returns every post type registered on the Lendis site, keyed by type name, including its `rest_base` and associated taxonomies.
       tags:
-      - discovery
+      - Discovery
       parameters: []
       responses:
         '200':
@@ -56,7 +56,7 @@ paths:
       summary: List registered taxonomies
       description: Returns every taxonomy registered on the Lendis site, keyed by taxonomy name.
       tags:
-      - discovery
+      - Discovery
       parameters: []
       responses:
         '200':
@@ -71,7 +71,7 @@ paths:
       summary: Search across content types
       description: Full-text search across the Lendis site's searchable content types, returning lightweight result stubs carrying id, title, url, type and subtype.
       tags:
-      - discovery
+      - Discovery
       parameters:
       - name: page
         in: query
