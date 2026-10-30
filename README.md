@@ -64,6 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Lendis is a company surfaced as a portfolio company of hv-capital and added to the API Evangelist network as a stub for enrichment. Sector: ai-enterprise-software. This profile is a lead awaiting the enrichment pipeline.
+Lendis GmbH is a Berlin-based B2B technology company, founded in 2018, that rents IT hardware to German small and mid-sized businesses under a Device-as-a-Service (DaaS) model. Lendis bundles hardware procurement, configuration and staging, delivery logistics, financing, IT support, lifecycle management and device offboarding into a single monthly rental rate, and manages the whole estate through LendisOS, a web platform covering a self-service shop, order tracking, asset inventory and contract management. The company targets organisations of roughly 50 to 500 employees that want to avoid tying up capital in laptops, smartphones, monitors and accessories. Lendis publishes no public developer program; its commercial platform runs on a private AWS API Gateway at api.lendis.io. Its marketing site does expose a public read-only WordPress REST content API, and Lendis publishes a machine-readable llms.txt for AI agents.
 
-Backed by: hv-capital
+**Areas:** Company · Ai Enterprise Software · Device As A Service · IT Hardware · Leasing · Asset Management · Workplace Technology · Procurement · Germany · Software-as-a-Service
+
+## Lendis on APIs.io
+
+Everything profiled for Lendis is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lendis/](https://apis.io/providers/lendis/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Lendis Website (WordPress REST)](https://apis.io/apis/lendis/lendis-io-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Lendis website at www.lendis.io: the route index of the site's content management system, catalogued as one…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [lendis-content](https://apis.io/servers/lendis/lendis-content/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Lendis Agentic Access](https://apis.io/agentic-access/lendis/lendis-agentic-access/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-case-study-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-discovery-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-kataloge-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-media-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-pages-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-posts-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-ratgeber-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-taxonomies-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-testimonial-api/)
+- [Moved to /providers/lendis/](https://apis.io/collections/lendis/open-lendis-wiki-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Lendis Content Overlay](https://apis.io/overlays/lendis/lendis-content-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lendis Authentication](https://apis.io/security/lendis/lendis-authentication/)
+- [Lendis Domain Security](https://apis.io/security/lendis/lendis-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.lendis.io)
+- [Support](https://www.lendis.io/kontakt/)
+- [Blog](https://www.lendis.io/magazin/)
+- [Terms of service](https://www.lendis.io/agb/)
+- [Privacy policy](https://www.lendis.io/datenschutz/)
+- [GitHub](https://github.com/lendis-tech)
+
+## API Evangelist rating
+
+**Kin Score 20.7** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 1.7 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 27.6 |
+
+**Agent readiness 5.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lendis/](https://apis.io/providers/lendis/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Lendis: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lendis/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
